@@ -16,7 +16,7 @@ function Start() {
 	else {
 		//UltraEdit.messageBox("не распознан путь");
 	}
-	if (path !== "D:\\Git\\SqlStyleLower.js")
+	if (path !== "D:\\Git\\SqlStyleLower\\SqlStyleLower.js")
 	{
 		UltraEdit.save();
 
