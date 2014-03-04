@@ -95,6 +95,7 @@ function formating(){
 	ReplaceLower("VIEW");
 	ReplaceLower("WHILE");
 	ReplaceLower("WITH");
+	ReplaceLower(";WITH");
 	ReplaceLower("UPDATE");
 	ReplaceLower("HAVING");
 
@@ -161,12 +162,15 @@ function formating(){
 	ReplaceLower("WHEN");
 	ReplaceLower("WHERE");
 	ReplaceLower("WHERE");
-	
+	ReplaceLower("PRINT");
 	
 	ReplaceLower("@@ROWCOUNT");
 	ReplaceLower("@@TRANCOUNT");
+	ReplaceLower("@@ERROR");
 	ReplaceLower("ERROR_MESSAGE");
 	ReplaceLower("ERROR_SEVERITY");
+	ReplaceLower("ERROR_PROCEDURE");
+	ReplaceLower("ERROR_LINE");
 	ReplaceLower("XACT_STATE");
 	
 	ReplaceString("EXECUTE", "EXEC");
@@ -232,7 +236,7 @@ function ReplaceStr (str, strlower){
 	{	
 		UltraEdit.activeDocument.top();
 		//для отладки
-		UltraEdit.outputWindow.write(strlower)
+		UltraEdit.outputWindow.write(strlower + ' ('+str+')')
 	}
 }
 
@@ -240,17 +244,27 @@ function GetFindText(str, t)
 {
 	var res = "";
 	var n = str.length;
+	var CharMatchCase = 0
+	//если ищем слово(а) в любом регистре
+	if (t == 1)
+	{
+		CharMatchCase = 1
+	}
+
 	for (var i = 0; i < n; i++) {
-		if (i == 0 && t == 0)
+		if (str[i].toUpperCase() == str[i].toLowerCase())
 		{
-			res = res + str[i].toUpperCase();
+			res = res + str[i];
 		}
-		else
-		{	if (str[i].toUpperCase() == str[i].toLowerCase())
+		else 
+		{
+			if (CharMatchCase == 0)
 			{
-				res = res + str[i];
+				res = res + str[i].toUpperCase();
+				CharMatchCase == 1;
 			}
-			else {
+			else
+			{
 				res = res + "[" + str[i].toUpperCase() + str[i].toLowerCase() + "]";
 			}
 		}
