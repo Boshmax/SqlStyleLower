@@ -163,7 +163,8 @@ function formating(){
 	ReplaceLower("WHERE");
 	ReplaceLower("WHERE");
 	ReplaceLower("PRINT");
-	
+	ReplaceLower("FLOOR");
+
 	ReplaceLower("@@ROWCOUNT");
 	ReplaceLower("@@TRANCOUNT");
 	ReplaceLower("@@ERROR");
@@ -236,7 +237,7 @@ function ReplaceStr (str, strlower){
 	{	
 		UltraEdit.activeDocument.top();
 		//для отладки
-		UltraEdit.outputWindow.write(strlower + ' ('+str+')')
+		UltraEdit.outputWindow.write(strlower + ' /'+str+'/')
 	}
 }
 
@@ -270,9 +271,6 @@ function GetFindText(str, t)
 		}
 	}
 	res = "((?<=[ ,\t\(\)])|(?<=^))" + res + "((?=[ ,\t\(\);])|(?=$))"
-//	if (str == "WHERE"){
-//		UltraEdit.outputWindow.write(res)
-//	}
 	return res
 }
 
@@ -280,21 +278,15 @@ function ReplaceSpace()
 {
 	UltraEdit.activeDocument.findReplace.matchWord=false;
 	UltraEdit.activeDocument.findReplace.replaceAll=true;
-
-	UltraEdit.activeDocument.findReplace.find("[A-ZА-Я0-9],\t");
-	if (UltraEdit.activeDocument.isFound()) {
-		UltraEdit.activeDocument.key("LEFT ARROW");
-		UltraEdit.activeDocument.key("DEL");
-		UltraEdit.activeDocument.write(" ");
-		UltraEdit.activeDocument.top();
-	}
-
 	UltraEdit.activeDocument.findReplace.matchCase=false;
-	UltraEdit.activeDocument.findReplace.replace("--ALTER .*\r\n", "");
-	UltraEdit.activeDocument.findReplace.replace("\t, ", ",\t");
-	UltraEdit.activeDocument.findReplace.replace("[(] ", "(");
-	UltraEdit.activeDocument.findReplace.replace(" [)]", ")");
-	UltraEdit.activeDocument.findReplace.replace("\r\n\r\n[g][o]", "\r\ngo");
+
+	ReplaceStr ("(?<=[A-zА-я0-9\)]),\t", ", ")
+	ReplaceStr ("--ALTER .*\r\n", "")
+	ReplaceStr ("\t, ", ",\t")
+	ReplaceStr ("[(] ", "(")
+	ReplaceStr (" [)]", ")")
+	ReplaceStr (",(?=[A-zА-я0-9@\(])", ", ")
+	ReplaceStr ("\r\n\r\n[g][o]", "\r\ngo")
 }
 
 Start();
