@@ -69,6 +69,7 @@ function formating(){
 	ReplaceLower("XML");
 
 	ReplaceLower("ALTER");
+	ReplaceLower("CREATE");
 	ReplaceLower("BEGIN");
 	ReplaceLower("BREAK");
 	ReplaceLower("CATCH");
@@ -98,6 +99,7 @@ function formating(){
 	ReplaceLower(";WITH");
 	ReplaceLower("UPDATE");
 	ReplaceLower("HAVING");
+	ReplaceLower("UNION");
 
 	ReplaceLower("SUM");
 	ReplaceLower("AND");
@@ -145,6 +147,7 @@ function formating(){
 	ReplaceLower("READPAST");
 	ReplaceLower("ROOT");
 	ReplaceLower("ROWCOUNT");
+	ReplaceLower("DATEADD");
 	ReplaceLower("RTRIM");
 	ReplaceLower("SELECT");
 	ReplaceLower("SET");
@@ -159,21 +162,31 @@ function formating(){
 	ReplaceLower("UNION ALL");
 	ReplaceLower("USING");
 	ReplaceLower("VALUES");
+	ReplaceLower("GETDATE");
 	ReplaceLower("WHEN");
 	ReplaceLower("WHERE");
 	ReplaceLower("WHERE");
 	ReplaceLower("PRINT");
 	ReplaceLower("FLOOR");
+	ReplaceLower("ASCII");
+	ReplaceLower("SCOPE_IDENTITY");
+	ReplaceLower("PATINDEX");
+	ReplaceLower("CONVERT");
 
 	ReplaceLower("@@ROWCOUNT");
 	ReplaceLower("@@TRANCOUNT");
 	ReplaceLower("@@ERROR");
+	ReplaceLower("@@PROCID");
 	ReplaceLower("ERROR_MESSAGE");
 	ReplaceLower("ERROR_SEVERITY");
 	ReplaceLower("ERROR_PROCEDURE");
 	ReplaceLower("ERROR_LINE");
 	ReplaceLower("XACT_STATE");
-	
+	ReplaceLower("NOCOUNT");
+	ReplaceLower("XACT_ABORT");
+	ReplaceLower("TABLOCKX");
+
+
 	ReplaceString("EXECUTE", "EXEC");
 	ReplaceString("INSERT INTO", "INSERT");
 	ReplaceString("OUTER JOIN", "JOIN");
@@ -245,11 +258,11 @@ function GetFindText(str, t)
 {
 	var res = "";
 	var n = str.length;
-	var CharMatchCase = 0
+	var CharMatchCase = 0;
 	//если ищем слово(а) в любом регистре
 	if (t == 1)
 	{
-		CharMatchCase = 1
+		CharMatchCase = 1;
 	}
 
 	for (var i = 0; i < n; i++) {
@@ -262,7 +275,7 @@ function GetFindText(str, t)
 			if (CharMatchCase == 0)
 			{
 				res = res + str[i].toUpperCase();
-				CharMatchCase == 1;
+				CharMatchCase = 1;
 			}
 			else
 			{
@@ -270,6 +283,7 @@ function GetFindText(str, t)
 			}
 		}
 	}
+
 	res = "((?<=[ ,\t\(\)])|(?<=^))" + res + "((?=[ ,\t\(\);])|(?=$))"
 	return res
 }
