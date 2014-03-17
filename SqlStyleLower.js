@@ -1,4 +1,4 @@
-п»ї//version 0.2
+//version 0.2
 
 function Start() {
 	var path = UltraEdit.activeDocument.path;
@@ -14,7 +14,7 @@ function Start() {
 		UltraEdit.activeDocument.toggleBookmark();
 	}
 	else {
-		//UltraEdit.messageBox("РЅРµ СЂР°СЃРїРѕР·РЅР°РЅ РїСѓС‚СЊ");
+		//UltraEdit.messageBox("не распознан путь");
 	}
 	if (path !== "D:\\Git\\SqlStyleLower\\SqlStyleLower.js")
 	{
@@ -25,7 +25,7 @@ function Start() {
 
 
 function formating(){
-	//СѓРґР°Р»РµРЅРёРµ РІСЃРµС… РїСЂРѕР±РµР»РѕРІ Рё С‚Р°Р±РѕРІ СЃРїСЂР°РІР°
+	//удаление всех пробелов и табов справа
 	UltraEdit.activeDocument.trimTrailingSpaces();
 
 	UltraEdit.perlReOn()
@@ -249,7 +249,7 @@ function ReplaceStr (str, strlower){
 	if (UltraEdit.activeDocument.isFound())
 	{	
 		UltraEdit.activeDocument.top();
-		//РґР»СЏ РѕС‚Р»Р°РґРєРё
+		//для отладки
 		UltraEdit.outputWindow.write(strlower + ' /'+str+'/')
 	}
 }
@@ -259,7 +259,7 @@ function GetFindText(str, t)
 	var res = "";
 	var n = str.length;
 	var CharMatchCase = 0;
-	//РµСЃР»Рё РёС‰РµРј СЃР»РѕРІРѕ(Р°) РІ Р»СЋР±РѕРј СЂРµРіРёСЃС‚СЂРµ
+	//если ищем слово(а) в любом регистре
 	if (t == 1)
 	{
 		CharMatchCase = 1;
@@ -294,12 +294,12 @@ function ReplaceSpace()
 	UltraEdit.activeDocument.findReplace.replaceAll=true;
 	UltraEdit.activeDocument.findReplace.matchCase=false;
 
-	ReplaceStr ("(?<=[A-zРђ-СЏ0-9\)]),\t", ", ")
+	ReplaceStr ("(?<=[A-zА-я0-9\)]),\t", ", ")
 	ReplaceStr ("--ALTER .*\r\n", "")
 	ReplaceStr ("\t, ", ",\t")
 	ReplaceStr ("[(] ", "(")
 	ReplaceStr (" [)]", ")")
-	ReplaceStr (",(?=[A-zРђ-СЏ0-9@\(])", ", ")
+	ReplaceStr (",(?=[A-zА-я0-9@\(])", ", ")
 	ReplaceStr ("\r\n\r\n[g][o]", "\r\ngo")
 }
 
