@@ -258,11 +258,11 @@ function GetFindText(str, t)
 {
 	var res = "";
 	var n = str.length;
-	var CharMatchCase = 0;
+	var StrLowerCase = "";
 	//если ищем слово(а) в любом регистре
-	if (t == 1)
+	if (t == 0)
 	{
-		CharMatchCase = 1;
+		StrLowerCase = "(?<!"+ str.toLowerCase()+ ")";
 	}
 
 	for (var i = 0; i < n; i++) {
@@ -272,19 +272,11 @@ function GetFindText(str, t)
 		}
 		else 
 		{
-			if (CharMatchCase == 0)
-			{
-				res = res + str[i].toUpperCase();
-				CharMatchCase = 1;
-			}
-			else
-			{
-				res = res + "[" + str[i].toUpperCase() + str[i].toLowerCase() + "]";
-			}
+			res = res + "[" + str[i].toUpperCase() + str[i].toLowerCase() + "]";
 		}
 	}
 
-	res = "((?<=[ ,\t\(\)])|(?<=^))" + res + "((?=[ ,\t\(\);])|(?=$))"
+	res = "((?<=[ ,\t\(\)])|(?<=^))(" + res + ")"+ StrLowerCase +"((?=[ ,\t\(\);])|(?=$))"
 	return res
 }
 
