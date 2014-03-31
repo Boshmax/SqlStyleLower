@@ -96,7 +96,6 @@ function formating(){
 	ReplaceLower("VIEW");
 	ReplaceLower("WHILE");
 	ReplaceLower("WITH");
-	ReplaceLower(";WITH");
 	ReplaceLower("UPDATE");
 	ReplaceLower("HAVING");
 	ReplaceLower("UNION");
@@ -164,7 +163,6 @@ function formating(){
 	ReplaceLower("VALUES");
 	ReplaceLower("GETDATE");
 	ReplaceLower("WHEN");
-	ReplaceLower("WHERE");
 	ReplaceLower("WHERE");
 	ReplaceLower("PRINT");
 	ReplaceLower("FLOOR");
@@ -276,7 +274,7 @@ function GetFindText(str, t)
 		}
 	}
 
-	res = "((?<=[ ,\t\(\)])|(?<=^))(" + res + ")"+ StrLowerCase +"((?=[ ,\t\(\);])|(?=$))"
+	res = "((?<=[ ,\t\(\);])|(?<=^))(" + res + ")"+ StrLowerCase +"((?=[ ,\t\(\);])|(?=$))"
 	return res
 }
 
