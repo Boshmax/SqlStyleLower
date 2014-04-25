@@ -216,7 +216,9 @@ function getinfo()
 		  UltraEdit.activeDocument.key("DEL");
 			UltraEdit.activeDocument.write('$Date: ' + ds +' $');
 	}
-
+	
+	UltraEdit.activeDocument.top();
+	
 	UltraEdit.activeDocument.findReplace.find("[$][Ss][Oo][Uu][Rr][Cc][Ee]:.*$");
 	if (UltraEdit.activeDocument.isFound()) {
 		var spath = '$Source: '+ UltraEdit.activeDocument.path +' $';
