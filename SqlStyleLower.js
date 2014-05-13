@@ -3,7 +3,10 @@
 function Start() {
 	var path = UltraEdit.activeDocument.path;
 	var re = /.*\\.*\.sql/gi;
+	var dt=new Date();
+	ms = dt.getMilliseconds();
 
+	UltraEdit.outputWindow.write(dt.toLocaleTimeString()+'.'+ ms);
 	if (re.test(path)) {
 		UltraEdit.activeDocument.toggleBookmark();
 		UltraEdit.activeDocument.gotoBookmark(-1);
@@ -21,6 +24,10 @@ function Start() {
 		UltraEdit.save();
 
 	}
+	var dt2=new Date();
+	ms = dt2.getMilliseconds();
+	UltraEdit.outputWindow.write(dt2.toLocaleTimeString()+'.'+ ms);
+	
 }
 
 
@@ -46,144 +53,39 @@ function formating(){
 	UltraEdit.activeDocument.top();
 
 	//type 
-	ReplaceLower("BIGINT");
-	ReplaceLower("BINARY");
+	FindWordArray(['VARBINARY','BINARY','CHAR','TYPE','REAL','SMALLINT','TIME'])
+	FindWordArray(['TINYINT','FLOAT','BIGINT','MONEY','UNIQUEIDENTIFIER','TABLE','SMALLDATETIME'])
+	
 	ReplaceLower("BIT");
-	ReplaceLower("CHAR");
 	ReplaceLower("DATE");
 	ReplaceLower("DATETIME");
-	ReplaceLower("FLOAT");
 	ReplaceLower("INT");
-	ReplaceLower("MONEY");
 	ReplaceLower("NUMERIC");
-	ReplaceLower("REAL");
 	ReplaceLower("SMALLDATETIME");
-	ReplaceLower("SMALLINT");
-	ReplaceLower("TABLE");
-	ReplaceLower("TIME");
-	ReplaceLower("TINYINT");
-	ReplaceLower("TYPE");
-	ReplaceLower("UNIQUEIDENTIFIER");
-	ReplaceLower("VARBINARY");
 	ReplaceLower("VARCHAR");
 	ReplaceLower("XML");
 
-	ReplaceLower("ALTER");
-	ReplaceLower("CREATE");
-	ReplaceLower("BEGIN");
-	ReplaceLower("BREAK");
-	ReplaceLower("CATCH");
-	ReplaceLower("COMMIT");
+
 	ReplaceLower("DECLARE");
-	ReplaceLower("DELETE");
-	ReplaceLower("END");
-	ReplaceLower("EXEC");
-	ReplaceLower("FUNCTION");
-	ReplaceLower("GO");
-	ReplaceLower("GRANT");
-	ReplaceLower("IF");
-	ReplaceLower("INSERT");
-	ReplaceLower("INTO");
-	ReplaceLower("PROCEDURE");
-	ReplaceLower("RAISERROR");
-	ReplaceLower("RETURN");
-	ReplaceLower("RETURNS");
-	ReplaceLower("ROLLBACK");
-	ReplaceLower("SAVE");
-	ReplaceLower("TRAN");
-	ReplaceLower("TRIGGER");
-	ReplaceLower("TRY");
-	ReplaceLower("VIEW");
-	ReplaceLower("WHILE");
-	ReplaceLower("WITH");
-	ReplaceLower("UPDATE");
-	ReplaceLower("HAVING");
-	ReplaceLower("UNION");
+	FindWordArray(['GRANT','TRIGGER','SAVE','INTO'])
+	FindWordArray(['ALTER','CREATE','FUNCTION','PROCEDURE','VIEW','RETURNS','RETURN'])
+	FindWordArray(['COMMIT','ROLLBACK','TRAN','CATCH','TRY'])
+	FindWordArray(['BEGIN','END','EXEC','GO'])
+	FindWordArray(['DELETE','INSERT','UPDATE','HAVING','UNION'])
+	FindWordArray(['BREAK','IF','WHILE','WITH','ELSE'])
 
-	ReplaceLower("SUM");
-	ReplaceLower("AND");
-	ReplaceLower("ANY");
-	ReplaceLower("APPLY");
-	ReplaceLower("AS");
-	ReplaceLower("BETWEEN");
-	ReplaceLower("BY");
-	ReplaceLower("CASE");
-	ReplaceLower("CAST");
-	ReplaceLower("COALESCE");
-	ReplaceLower("CROSS");
-	ReplaceLower("DESC");
-	ReplaceLower("DISTINCT");
-	ReplaceLower("ELSE");
-	ReplaceLower("EXISTS");
-	ReplaceLower("FOR");
-	ReplaceLower("FROM");
-	ReplaceLower("GROUP BY");
-	ReplaceLower("IN");
-	ReplaceLower("INNER");
-	ReplaceLower("IS");
-	ReplaceLower("ISNULL");
-	ReplaceLower("JOIN");
-	ReplaceLower("LEFT");
-	ReplaceLower("LEN");
-	ReplaceLower("LIKE");
-	ReplaceLower("LTRIM");
-	ReplaceLower("MATCHED");
-	ReplaceLower("MAX");
-	ReplaceLower("MERGE");
-	ReplaceLower("MIN");
-	ReplaceLower("NEWID");
-	ReplaceLower("NOT");
-	ReplaceLower("NULL");
-	ReplaceLower("NULLIF");
-	ReplaceLower("OBJECT_ID");
-	ReplaceLower("ON");
-	ReplaceLower("OR");
-	ReplaceLower("ORDER BY");
-	ReplaceLower("OUTPUT");
-	ReplaceLower("OVER");
-	ReplaceLower("PATH");
-	ReplaceLower("READONLY");
-	ReplaceLower("READPAST");
-	ReplaceLower("ROOT");
-	ReplaceLower("ROWCOUNT");
-	ReplaceLower("DATEADD");
-	ReplaceLower("RTRIM");
-	ReplaceLower("SELECT");
-	ReplaceLower("SET");
-	ReplaceLower("SOME");
-	ReplaceLower("SOURCE");
-	ReplaceLower("SYSNAME");
-	ReplaceLower("TARGET");
-	ReplaceLower("THEN");
-	ReplaceLower("TO");
-	ReplaceLower("TOP");
-	ReplaceLower("TRANCOUNT");
-	ReplaceLower("UNION ALL");
-	ReplaceLower("USING");
-	ReplaceLower("VALUES");
-	ReplaceLower("GETDATE");
-	ReplaceLower("WHEN");
-	ReplaceLower("WHERE");
-	ReplaceLower("PRINT");
-	ReplaceLower("FLOOR");
-	ReplaceLower("ASCII");
-	ReplaceLower("SCOPE_IDENTITY");
-	ReplaceLower("PATINDEX");
-	ReplaceLower("CONVERT");
+	FindWordArray(['SELECT','APPLY','FROM','INNER','JOIN','LEFT','CROSS','WHERE', 'ORDER BY'])
+	FindWordArray(['AS','BY','IN','IS','ISNULL','NULL','NULLIF','ON', 'OR','LIKE'])
+	FindWordArray(['SUM','ANY','BETWEEN','DISTINCT','DESC','GROUP BY','MAX','MIN', 'NOT'])
+	FindWordArray(['MATCHED','MERGE','OVER','SOURCE','SOME','TARGET','USING','PATINDEX'])
+	FindWordArray(['CASE','THEN','WHEN','TOP','CONVERT','CAST','COALESCE'])
+	FindWordArray(['EXISTS','LEN','LTRIM','NEWID','OUTPUT','READONLY','READPAST'])
+	FindWordArray(['ASCII','TO','SYSNAME','RTRIM','DATEADD','FOR','ROUND','FLOOR','OBJECT_ID'])
+	FindWordArray(['SET','UNION ALL','VALUES','GETDATE','PRINT','SCOPE_IDENTITY'])
+	FindWordArray(['PATH','ROOT','NOCOUNT','TABLOCKX'])
 
-	ReplaceLower("@@ROWCOUNT");
-	ReplaceLower("@@TRANCOUNT");
-	ReplaceLower("@@ERROR");
-	ReplaceLower("@@PROCID");
-	ReplaceLower("ERROR_MESSAGE");
-	ReplaceLower("ERROR_SEVERITY");
-	ReplaceLower("ERROR_PROCEDURE");
-	ReplaceLower("ERROR_LINE");
-	ReplaceLower("XACT_STATE");
-	ReplaceLower("NOCOUNT");
-	ReplaceLower("XACT_ABORT");
-	ReplaceLower("TABLOCKX");
-
+	FindWordArray(['@@ROWCOUNT','@@TRANCOUNT','@@ERROR','@@PROCID'])
+	FindWordArray(['ERROR_MESSAGE','ERROR_SEVERITY','ERROR_PROCEDURE','ERROR_LINE','XACT_STATE','XACT_ABORT'])
 
 	ReplaceString("EXECUTE", "EXEC");
 	ReplaceString("INSERT INTO", "INSERT");
@@ -195,6 +97,40 @@ function formating(){
 
 }
 
+
+function FindWordArray(words)
+{
+	UltraEdit.activeDocument.top();
+	UltraEdit.activeDocument.findReplace.matchWord=false;
+	UltraEdit.activeDocument.findReplace.regExp=true;
+	UltraEdit.activeDocument.findReplace.matchCase=true;
+
+	var word
+	var ReString = '('
+	for (var i = 0; i < words.length; i++) {
+		word = words[i]
+		if (i == 0) {
+			ReString = '('+ GetFindText(word , 0)
+		}
+		else {
+			ReString = ReString +'|'+ GetFindText(word , 0)
+		}
+	}
+	ReString = ReString + ')'
+	//UltraEdit.outputWindow.write(ReString)
+	UltraEdit.activeDocument.top();
+
+	UltraEdit.activeDocument.findReplace.find(ReString);
+	if (UltraEdit.activeDocument.isFound()) {
+		for (var i = 0; i < words.length; i++) {
+			//UltraEdit.outputWindow.write(words[i])
+			ReplaceLower(words[i]);
+			//UltraEdit.outputWindow.write(words[i])
+		}
+	}
+}
+
+//формирование и замена заголовка
 function getinfo()
 {
 	UltraEdit.activeDocument.findReplace.selectText=true;
@@ -228,7 +164,7 @@ function getinfo()
 	}
 
 }
-
+//поиск и перевод слова в нижний регистр
 function ReplaceLower(str)
 {
 	var strlower = str.toLowerCase();
@@ -236,6 +172,7 @@ function ReplaceLower(str)
 	ReplaceStr(strFind, strlower);
 }
 
+//поиск строки и замена ее на другую строку
 function ReplaceString (str, str2)
 {
 	var strlower = str2.toLowerCase();
@@ -243,8 +180,9 @@ function ReplaceString (str, str2)
 	ReplaceStr(strFind, strlower);
 }
 
-
+//замена фразы
 function ReplaceStr (str, strlower){
+	UltraEdit.activeDocument.findReplace.replaceAll=true;
 	UltraEdit.activeDocument.findReplace.replace(str, strlower);
 	if (UltraEdit.activeDocument.isFound())
 	{	
@@ -254,6 +192,7 @@ function ReplaceStr (str, strlower){
 	}
 }
 
+//Получаем регулярное выражения на искомое слово
 function GetFindText(str, t)
 {
 	var res = "";
@@ -280,6 +219,8 @@ function GetFindText(str, t)
 	return res
 }
 
+
+//замена символов
 function ReplaceSpace()
 {
 	UltraEdit.activeDocument.findReplace.matchWord=false;
