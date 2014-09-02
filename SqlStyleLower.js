@@ -74,8 +74,8 @@ function formating(){
 	FindWordArray(['DELETE','INSERT','UPDATE','HAVING','UNION'])
 	FindWordArray(['BREAK','IF','WHILE','WITH','ELSE'])
 
-	FindWordArray(['SELECT','APPLY','FROM','INNER','JOIN','LEFT','CROSS','WHERE', 'ORDER BY'])
-	FindWordArray(['AS','BY','IN','IS','ISNULL','NULL','NULLIF','ON', 'OR','LIKE'])
+	FindWordArray(['SELECT','APPLY','FROM','INNER','JOIN','LEFT','CROSS','WHERE', 'ORDER BY', 'RAISERROR'])
+	FindWordArray(['AS','BY','IN','IS','ISNULL','NULL','NULLIF','ON', 'OR','LIKE', 'AND'])
 	FindWordArray(['SUM','ANY','BETWEEN','DISTINCT','DESC','GROUP BY','MAX','MIN', 'NOT'])
 	FindWordArray(['MATCHED','MERGE','OVER','SOURCE','SOME','TARGET','USING','PATINDEX'])
 	FindWordArray(['CASE','THEN','WHEN','TOP','CONVERT','CAST','COALESCE'])
@@ -83,6 +83,8 @@ function formating(){
 	FindWordArray(['ASCII','TO','SYSNAME','RTRIM','DATEADD','FOR','ROUND','FLOOR','OBJECT_ID'])
 	FindWordArray(['SET','UNION ALL','VALUES','GETDATE','PRINT','SCOPE_IDENTITY'])
 	FindWordArray(['PATH','ROOT','NOCOUNT','TABLOCKX'])
+	FindWordArray(['CHARINDEX','SUBSTRING','OBJECTPROPERTY'])
+	
 
 	FindWordArray(['@@ROWCOUNT','@@TRANCOUNT','@@ERROR','@@PROCID'])
 	FindWordArray(['ERROR_MESSAGE','ERROR_SEVERITY','ERROR_PROCEDURE','ERROR_LINE','XACT_STATE','XACT_ABORT'])
@@ -215,7 +217,7 @@ function GetFindText(str, t)
 		}
 	}
 
-	res = "((?<=[ ,\t\(\);])|(?<=^))(" + res + ")"+ StrLowerCase +"((?=[ ,\t\(\);])|(?=$))"
+	res = "((?<=[ ,\t\(\)])|(?<=^))(" + res + ")"+ StrLowerCase +"((?=[ ,\t\(\)])|(?=$))"
 	return res
 }
 
