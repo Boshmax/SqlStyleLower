@@ -2,7 +2,7 @@
 
 function Start() {
 	var path = UltraEdit.activeDocument.path;
-	var re = /.*\\.*\.sql/gi;
+	var re = /.*registrar.*\\.*\.sql/gi;
 	var dt=new Date();
 	ms = dt.getMilliseconds();
 
