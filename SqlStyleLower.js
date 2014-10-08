@@ -2,7 +2,7 @@
 
 function Start() {
 	var path = UltraEdit.activeDocument.path;
-	var re = /.*registrar.*\\.*\.sql/gi;
+	var re = /.*(registrar)|(gk-molod)|(acs).*\\.*\.sql/gi;
 	var dt=new Date();
 	ms = dt.getMilliseconds();
 
@@ -64,9 +64,8 @@ function formating(){
 	ReplaceLower("SMALLDATETIME");
 	ReplaceLower("VARCHAR");
 	ReplaceLower("XML");
-
-
 	ReplaceLower("DECLARE");
+	
 	FindWordArray(['GRANT','TRIGGER','SAVE','INTO'])
 	FindWordArray(['ALTER','CREATE','FUNCTION','PROCEDURE','VIEW','RETURNS','RETURN'])
 	FindWordArray(['COMMIT','ROLLBACK','TRAN','CATCH','TRY'])
@@ -161,6 +160,7 @@ function getinfo()
 	if (UltraEdit.activeDocument.isFound()) {
 		var spath = '$Source: '+ UltraEdit.activeDocument.path +' $';
 		spath = spath.replace("D:\\","")
+		spath = spath.replace("registrar-force", "registrar-sql")
 		UltraEdit.activeDocument.key("DEL");
 		UltraEdit.activeDocument.write(spath);
 	}
