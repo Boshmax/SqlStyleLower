@@ -2,9 +2,15 @@
 
 function Start() {
 	var path = UltraEdit.activeDocument.path;
-	var re = /.*(registrar)|(gk-molod)|(acs).*\\.*\.sql/gi;
+	var re = /.*(registrar)|(gk-molod)|(acs)|(ouk).*\\.*\.sql/gi;
 	var dt=new Date();
 	ms = dt.getMilliseconds();
+	var FormatMode = "REG"
+	
+	var ouk = /.*ouk.*\\.*\.sql/gi;
+	if (ouk.test(path)){
+		FormatMode = "OUK"
+	}
 
 	UltraEdit.outputWindow.write(dt.toLocaleTimeString()+'.'+ ms);
 	if (re.test(path)) {
@@ -12,7 +18,7 @@ function Start() {
 		UltraEdit.activeDocument.gotoBookmark(-1);
 		UltraEdit.activeDocument.top();
 		UltraEdit.activeDocument.key("UP ARROW");
-		formating();
+		formating(FormatMode);
 		UltraEdit.activeDocument.gotoBookmark(-1);
 		UltraEdit.activeDocument.toggleBookmark();
 	}
@@ -31,10 +37,13 @@ function Start() {
 }
 
 
-function formating(){
+function formating(FormatMode){
 	//удаление всех пробелов и табов справа
-	UltraEdit.activeDocument.trimTrailingSpaces();
-
+	if (FormatMode == "REG")
+	{
+		UltraEdit.activeDocument.trimTrailingSpaces();
+	}
+	
 	UltraEdit.perlReOn()
 	UltraEdit.activeDocument.findReplace.matchCase=true;
 	UltraEdit.activeDocument.findReplace.matchWord=false;
@@ -54,7 +63,7 @@ function formating(){
 
 	//type 
 	FindWordArray(['VARBINARY','BINARY','CHAR','TYPE','REAL','SMALLINT','TIME'])
-	FindWordArray(['TINYINT','FLOAT','BIGINT','MONEY','UNIQUEIDENTIFIER','TABLE','SMALLDATETIME'])
+	FindWordArray(['TINYINT','FLOAT','BIGINT','MONEY','UNIQUEIDENTIFIER','TABLE','SMALLDATETIME', 'DATETIME2'])
 	
 	ReplaceLower("BIT");
 	ReplaceLower("DATE");
@@ -66,22 +75,22 @@ function formating(){
 	ReplaceLower("XML");
 	ReplaceLower("DECLARE");
 	
-	FindWordArray(['GRANT','TRIGGER','SAVE','INTO'])
-	FindWordArray(['ALTER','CREATE','FUNCTION','PROCEDURE','VIEW','RETURNS','RETURN'])
+	FindWordArray(['GRANT','TRIGGER','SAVE','INTO', 'IDENTITY'])
+	FindWordArray(['ALTER','CREATE','FUNCTION','PROCEDURE','VIEW','RETURNS','RETURN','DROP'])
 	FindWordArray(['COMMIT','ROLLBACK','TRAN','CATCH','TRY'])
 	FindWordArray(['BEGIN','END','EXEC','GO'])
 	FindWordArray(['DELETE','INSERT','UPDATE','HAVING','UNION'])
 	FindWordArray(['BREAK','IF','WHILE','WITH','ELSE'])
 
-	FindWordArray(['SELECT','APPLY','FROM','INNER','JOIN','LEFT','CROSS','WHERE', 'ORDER BY', 'RAISERROR'])
-	FindWordArray(['AS','BY','IN','IS','ISNULL','NULL','NULLIF','ON', 'OR','LIKE', 'AND'])
+	FindWordArray(['SELECT','APPLY','FROM','INNER','JOIN','LEFT','CROSS','WHERE', 'OUTER', 'ORDER BY', 'RAISERROR'])
+	FindWordArray(['AS','BY','IN','IS','ISNULL','NULL','NULLIF','ON', 'OR','LIKE', 'AND', 'REPLACE'])
 	FindWordArray(['SUM','ANY','BETWEEN','DISTINCT','DESC','GROUP BY','MAX','MIN', 'NOT'])
 	FindWordArray(['MATCHED','MERGE','OVER','SOURCE','SOME','TARGET','USING','PATINDEX'])
 	FindWordArray(['CASE','THEN','WHEN','TOP','CONVERT','CAST','COALESCE','COUNT'])
-	FindWordArray(['EXISTS','LEN','LTRIM','NEWID','OUTPUT','READONLY','READPAST'])
+	FindWordArray(['EXISTS','LEN','LTRIM','NEWID','OUTPUT','READONLY','READPAST','DATEDIFF'])
 	FindWordArray(['ASCII','TO','SYSNAME','RTRIM','DATEADD','FOR','ROUND','FLOOR','OBJECT_ID'])
-	FindWordArray(['SET','UNION ALL','VALUES','GETDATE','PRINT','SCOPE_IDENTITY'])
-	FindWordArray(['PATH','ROOT','NOCOUNT','TABLOCKX'])
+	FindWordArray(['SET','UNION ALL','VALUES','GETDATE', 'SYSDATETIME','PRINT','SCOPE_IDENTITY'])
+	FindWordArray(['PATH','ROOT','NOCOUNT','TABLOCKX', 'PERCENT', 'DEFAULT'])
 	FindWordArray(['CHARINDEX','SUBSTRING','OBJECTPROPERTY', 'CONTAINSTABLE', 'PRIMARY KEY','CEILING'])
 	
 
@@ -92,8 +101,10 @@ function formating(){
 	ReplaceString("INSERT INTO", "INSERT");
 	ReplaceString("OUTER JOIN", "JOIN");
 	ReplaceString("TRANSACTION", "TRAN");
-
-	ReplaceSpace();
+	if (FormatMode == "REG")
+	{
+		ReplaceSpace();
+	}
 	getinfo();
 
 }
@@ -217,7 +228,7 @@ function GetFindText(str, t)
 		}
 	}
 
-	res = "((?<=[ ,\t\(\)])|(?<=^))(" + res + ")"+ StrLowerCase +"((?=[ ,\t\(\)])|(?=$))"
+	res = "((?<=[ ,\t\(\)])|(?<=^))(" + res + ")"+ StrLowerCase +"((?=[; ,\t\(\)])|(?=$))"
 	return res
 }
 
